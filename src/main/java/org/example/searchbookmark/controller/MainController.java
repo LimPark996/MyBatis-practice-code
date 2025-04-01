@@ -17,7 +17,7 @@ public class MainController {
     }
 
     @GetMapping
-    public String index() {
+    public String index() throws Exception {
         searchService.searchByKeyword("4월은 너의 거짓말");
         return "index";
     }

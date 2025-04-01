@@ -1,7 +1,9 @@
 package org.example.searchbookmark.service;
 
 import org.example.searchbookmark.model.vo.KeywordSearch;
+import org.example.searchbookmark.model.vo.NaverSearchParam;
 import org.example.searchbookmark.util.MyLogger;
+import org.example.searchbookmark.util.NaverSearchAPI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,15 @@ import java.util.List;
 public class NaverSearchService implements SearchService
 {
     private final MyLogger logger = new MyLogger(this.getClass().getName());
+    private final NaverSearchAPI naverSearchAPI;
+
+    public NaverSearchService(NaverSearchAPI naverSearchAPI) {
+        this.naverSearchAPI = naverSearchAPI;
+    }
 
     @Override
-    public List<KeywordSearch> searchByKeyword(String keyword) {
+    public List<KeywordSearch> searchByKeyword(String keyword) throws Exception {
+        naverSearchAPI.callAPI(new NaverSearchParam(keyword));
         logger.info("searchByKeyword keyword: %s".formatted(keyword));
         return List.of();
     }
