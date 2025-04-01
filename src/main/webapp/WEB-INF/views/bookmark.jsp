@@ -77,7 +77,7 @@
     <p class="date">날짜: <%= bookmark.date() %></p>
     <p class="date">생성일: <%= bookmark.createdAt() %></p>
 
-    <form action="<%= request.getContextPath() %>">
+    <form action="<%=request.getContextPath().isEmpty() ? "/" : request.getContextPath() %>">
         <button>돌아가기</button>
     </form>
 </div>
