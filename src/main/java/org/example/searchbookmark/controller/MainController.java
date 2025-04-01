@@ -5,9 +5,7 @@ import org.example.searchbookmark.service.SearchService;
 import org.example.searchbookmark.util.MyLogger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,5 +39,10 @@ public class MainController {
         List<KeywordSearch> result = searchService.searchByKeyword(keyword);
         model.addAttribute("result", result);
         return "index";
+    }
+
+    @PostMapping("/bookmark")
+    public String bookmark(@ModelAttribute KeywordSearch keywordSearch, Model model) throws Exception {
+        return "redirect:/"; // servlet으로 보내기
     }
 }
