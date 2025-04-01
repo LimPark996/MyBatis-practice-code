@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.example.searchbookmark.model.vo.KeywordSearch;
 import org.example.searchbookmark.model.vo.NaverSearchParam;
+import org.example.searchbookmark.model.vo.NaverSearchResult;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -33,7 +34,17 @@ public class NaverSearchAPI implements DotenvMixin, ObjectMapperMixin {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         String responseBody = response.body();
-        logger.info(responseBody);
-        return List.of();
+//        logger.info(responseBody);
+        NaverSearchResult naverSearchResult = objectMapper.readValue(responseBody, NaverSearchResult.class);
+        return naverSearchResult.items()
+                .stream().map(item -> new KeywordSearch(
+                        "", // DB가 생성해줄 예정
+                        item.title(),
+                        item.link(),
+                        item.description(),
+                        item.postdate(),
+                        "" // DB가 생성해줄 예정
+                ))
+                .toList();
      }
 }
