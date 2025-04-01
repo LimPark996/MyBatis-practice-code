@@ -6,7 +6,26 @@
 <!-- 인터페이스 형태로 구현된 Mapper 경로 -> 패키지 포함 -->
 <!-- 경로 참조/복사 > 참조 복사 (패키지 경로까지 포함) -->
 <mapper namespace="org.example.searchbookmark.model.mapper.BookmarkMapper">
+<!--    <insert id="insertBookmark" parameterType="org.example.searchbookmark.model.vo.KeywordSearch">-->
+    <select id="checkLastID" resultType="String">
+        SELECT bookmark_id FROM search_result_bookmark
+        ORDER BY created_at DESC LIMIT 1
+    </select>
     <insert id="insertBookmark" parameterType="org.example.searchbookmark.model.vo.KeywordSearch">
         INSERT INTO search_result_bookmark (title, link, description, date) values (#{title}, #{link}, #{description}, #{date})
     </insert>
+    <resultMap id="BookmarkMap" type="org.example.searchbookmark.model.vo.KeywordSearch">
+        <constructor>
+            <arg column="bookmark_id" javaType="String" name="uuid" />
+            <arg column="title" javaType="String" name="title" />
+            <arg column="link" javaType="String" name="link" />
+            <arg column="description" javaType="String" name="description" />
+            <arg column="date" javaType="String" name="date" />
+            <arg column="created_at" javaType="String" name="createdAt" />
+        </constructor>
+    </resultMap>
+    <select id="getOneBookmark" resultMap="BookmarkMap" parameterType="String">
+        SELECT * FROM search_result_bookmark
+        WHERE bookmark_id = #{uuid}
+    </select>
 </mapper>

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Controller
 //@RequestMapping("/") // 이런 경우는 생략해도 무방함
@@ -63,7 +62,13 @@ public class MainController {
         // 임시 저장 후 꺼내다 쓴 것
          Map<String, KeywordSearch> temp = (HashMap<String, KeywordSearch>) session.getAttribute("temp");
 //         logger.info(temp.get(uuid).link());
-        bookmarkService.createBookmark(temp.get(uuid));
-        return "redirect:/"; // servlet으로 보내기
+        String resultID = bookmarkService.createBookmark(temp.get(uuid));
+        return "redirect:/%s".formatted(resultID); // servlet으로 보내기
+    }
+
+    @GetMapping("/{uuid}")
+    public String search(@PathVariable("uuid") String uuid, Model model) throws Exception {
+        model.addAttribute("bookmark", bookmarkService.readOneBookmark(uuid));
+        return "bookmark";
     }
 }
