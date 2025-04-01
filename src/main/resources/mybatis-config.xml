@@ -16,7 +16,6 @@
     </environments>
     <mappers>
         <!-- resources 를 기준으로 해서 어느 경로에 있는지... -->
-<!--        <mapper resource="mappers/TestMapper.xml"/>-->
-<!--        <mapper resource="mappers/AnimeMapper.xml"/>-->
+        <mapper resource="mappers/BookmarkMapper.xml"/>
     </mappers>
 </configuration>

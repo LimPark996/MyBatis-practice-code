@@ -2,6 +2,7 @@ package org.example.searchbookmark.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.searchbookmark.model.vo.KeywordSearch;
+import org.example.searchbookmark.service.BookmarkService;
 import org.example.searchbookmark.service.SearchService;
 import org.example.searchbookmark.util.MyLogger;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,18 @@ public class MainController {
 
     // 멤버변수
     private final SearchService searchService;
+    private final BookmarkService bookmarkService;
     // 구별을 굳이 안해도 돼 -> 1:1 대응이 되니까
 
     // 생성자 주입 -> 의존성 주입을 한 타입은? SearchService
-    public MainController(SearchService searchService) {
+    public MainController(SearchService searchService, BookmarkService bookmarkService) {
         this.searchService = searchService;
+        this.bookmarkService = bookmarkService;
     }
 
+    // [Form]
+    // RequestParam -> 일부분만 받을 때 (input -> name)
+    // ModelAttribute -> 전부가 특정한 dto, 엔티티와 매칭될 때
     @GetMapping
     public String index(Model model,
 //                        @RequestParam("keyword") String keyword
@@ -56,7 +62,8 @@ public class MainController {
     public String bookmark(@RequestParam("uuid") String uuid, Model model, HttpSession session) throws Exception {
         // 임시 저장 후 꺼내다 쓴 것
          Map<String, KeywordSearch> temp = (HashMap<String, KeywordSearch>) session.getAttribute("temp");
-         logger.info(temp.get(uuid).link());
+//         logger.info(temp.get(uuid).link());
+        bookmarkService.createBookmark(temp.get(uuid));
         return "redirect:/"; // servlet으로 보내기
     }
 }
