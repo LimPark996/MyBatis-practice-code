@@ -11,7 +11,7 @@ public class MainController {
     private final SearchService searchService;
     // 구별을 굳이 안해도 돼 -> 1:1 대응이 되니까
 
-    // 생성자 주입
+    // 생성자 주입 -> 의존성 주입을 한 타입은? SearchService
     public MainController(SearchService searchService) {
         this.searchService = searchService;
     }
