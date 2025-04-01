@@ -15,6 +15,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class NaverSearchAPI implements DotenvMixin, ObjectMapperMixin {
@@ -38,7 +39,9 @@ public class NaverSearchAPI implements DotenvMixin, ObjectMapperMixin {
         NaverSearchResult naverSearchResult = objectMapper.readValue(responseBody, NaverSearchResult.class);
         return naverSearchResult.items()
                 .stream().map(item -> new KeywordSearch(
-                        "", // DB가 생성해줄 예정
+//                        "", // DB가 생성해줄 예정
+                        UUID.randomUUID().toString(),
+                        // DB에 들어가기 위한 용이 아니라... 세션에 저장해놓고 꺼내쓰기 위한 것.
                         item.title(),
                         item.link(),
                         item.description(),

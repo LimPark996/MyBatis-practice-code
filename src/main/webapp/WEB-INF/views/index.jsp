@@ -24,6 +24,10 @@
                 <li><%= v.description() %></li>
                 <li><%= v.date() %></li>
                 <%--<li><%= v.createdAt() %></li>--%>
+                <form action="bookmark" method="post">
+                    <input type="hidden" name="uuid" value="<%= v.uuid() %>">
+                    <button>북마크</button>
+                </form>
             </ul>
         </div>
             <%
