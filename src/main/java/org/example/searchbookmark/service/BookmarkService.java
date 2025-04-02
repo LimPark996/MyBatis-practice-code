@@ -17,7 +17,8 @@ public class BookmarkService {
             int count = mapper.insertBookmark(keywordSearch);
             logger.info(count + " bookmark inserted");
             String uuid = mapper.checkLastID();
-            session.commit();
+            session.commit(); //insert, update, delete는 commit 필수예요 (데이터를 바꾸니까)
+            // 우리가 직접 commit()을 호출해줘야 → 그제서야 DB에 **"진짜 저장"**이 됩니다!
             return uuid;
         }
     }
