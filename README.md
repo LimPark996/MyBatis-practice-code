@@ -203,6 +203,7 @@ DispatcherServlet을 등록해서,
 AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 context.register(org.example.searchbookmark.config.AppConfig.class);의 동작 흐름
 
+```
 [WebAppInitializer] ← 프로젝트 진입점
      ↓
 [AnnotationConfigWebApplicationContext] ← 스프링 환경 만들기
@@ -212,6 +213,7 @@ context.register(org.example.searchbookmark.config.AppConfig.class);의 동작 �
 @ComponentScan(...) ← Bean 등록할 범위 설정됨
      ↓
 @Service, @Controller, ... → Bean 등록 완료
+```
 
 // 웹 프로젝트가 시작될 때 처음 실행되는 클래스
 public class WebAppInitializer implements WebApplicationInitializer {
