@@ -1,4 +1,4 @@
-# 🌱 Spring MVC란?
+## 🌱 Spring MVC란?
 
 > **Spring MVC는 웹 요청을 받아서 → 컨트롤러에 전달하고 → 뷰(JSP 등)를 보여주는 웹 프레임워크**예요.
 
@@ -12,7 +12,7 @@
 
 ---
 
-## ✅ 전체 흐름 한 눈에 보기
+### ✅ 전체 흐름 한 눈에 보기
 
 ```plaintext
 [사용자] ➝ /book 요청
@@ -30,7 +30,7 @@
 
 ---
 
-# 🧩 구성 요소별 역할 + 어디서 설정되는지
+## 🧩 구성 요소별 역할 + 어디서 설정되는지
 
 | 구성요소 | 역할 | 어떤 파일에서 설정됨 |
 |----------|------|--------------------|
@@ -40,85 +40,15 @@
 | **MyBatisConfig** | DB 연결 및 MyBatis 설정 (SQL 실행용) | `.env`, `mybatis-config.xml` 읽음 |
 
 ---
-
-# 🧠 용어 완전 정리
-
-## 📌 Servlet (서블릿)이란?
-
-> 자바로 만든 **웹 요청 처리용 클래스**
-
-예전에는 웹 요청을 처리할 때 직접 `HttpServlet` 클래스를 만들어서 일일이 doGet/doPost 써야 했어요 😱  
-근데 너무 불편해서 스프링이 이걸 대신해주는 친구를 만들었어요 → 바로...
-
 ---
 
-## 📌 DispatcherServlet이란?
-
-> Spring MVC의 **가장 핵심이 되는 서블릿**  
-> 모든 웹 요청을 가로채서 → 어떤 컨트롤러로 보낼지 결정해줘요!
-
-그래서 이런 흐름이 가능해지는 거예요:
-
-```plaintext
-[브라우저 요청] ➝ DispatcherServlet ➝ 적절한 @Controller ➝ 응답
-```
-
----
-
-## 📌 Controller가 뭔가요?
-
-> 사용자의 웹 요청을 받아서 → 처리하고 → 어떤 화면(JSP)을 보여줄지 결정하는 클래스
-
-예:
-
-```java
-@Controller
-public class MainController {
-
-    @GetMapping("/book")
-    public String bookList(Model model) {
-        List<Book> books = bookService.findAll();
-        model.addAttribute("books", books);
-        return "book"; // → /WEB-INF/views/book.jsp 로 이동
-    }
-}
-```
-
-📌 즉, 유저가 요청하면  
-📌 컨트롤러는 서비스한테 “데이터 가져와!”라고 말하고  
-📌 그 데이터를 JSP에 넘겨주는 역할을 해요
-
----
-
-## ✨ 정리해볼게요! (진짜 핵심 정리)
-
-| 개념 | 역할 | 설정 위치 |
-|------|------|-----------|
-| **Servlet** | 웹 요청 처리용 클래스 (기본적인 구조) | 톰캣 내부 |
-| **DispatcherServlet** | Spring MVC의 핵심 서블릿. 모든 요청을 받아 컨트롤러로 전달 | `WebAppInitializer`에서 등록됨 |
-| **Controller** | 사용자의 요청을 받고 → 처리하고 → 어떤 뷰 보여줄지 결정 | `@Controller`, `@GetMapping` 등 |
-| **AppConfig** | 스프링이 어떤 클래스를 관리할지 알려주는 설정 | `@ComponentScan` |
-| **WebConfig** | JSP 경로, 정적 파일 경로 등 화면 관련 설정 | `ViewResolver`, `addResourceHandlers()` |
-| **MyBatisConfig** | DB 연결 설정 (SQL 실행을 위한 환경 구성) | `.env`, `mybatis-config.xml` |
-
----
-
-## ✅ 유미님만을 위한 한 줄 정리
-
-> Spring MVC는  
-> **요청이 들어오면 DispatcherServlet이 컨트롤러에게 넘기고,  
-> 컨트롤러는 필요한 데이터를 가져와 JSP로 넘기는 구조**예요.
-
----
----
-
-# ✅ 목표: 게시판 기능 만들기  
+## Spring MVC와 일반 서블릿 빙식 비교: ✅ 목표: 게시판 기능 만들기  
 > "/post/list"로 접속하면 글 목록이 나오고  
 > "/post/write"로 글을 등록하면 저장된 글 목록에 반영됨
 
 ---
 
-## 1️⃣ **Spring 없이 만드는 방식 (서블릿 방식)**
+### 1️⃣ **Spring 없이 만드는 방식 (서블릿 방식)**
 
 ---
 
@@ -233,7 +163,7 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-## ⚠️ 여기까지의 문제점 (Spring 없이)
+### ⚠️ 여기까지의 문제점 (Spring 없이)
 
 - 서블릿 2개 (`list`, `write`) 각각 직접 작성
 - `doGet()`, `doPost()` 구분하고 `getParameter()`, `setAttribute()` 매번 반복
@@ -245,7 +175,7 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-# 2️⃣ **같은 기능, Spring MVC로 만들면?**
+## 2️⃣ **같은 기능, Spring MVC로 만들면?**
 
 ---
 
@@ -308,7 +238,7 @@ public class PostController {
 
 ---
 
-## 🧠 Spring MVC에서 달라진 점
+### 🧠 Spring MVC에서 달라진 점
 
 | 기능 | 서블릿 방식 | Spring MVC |
 |------|-------------|------------|
@@ -318,11 +248,3 @@ public class PostController {
 | 화면 이동 | `dispatcher.forward()` | `return "viewName"` |
 | URL 연결 | `@RequestMapping`, 자동 매핑 | 직접 URL 등록 필요 없음 |
 | DI 지원 | 없음 | `@Autowired`, 생성자 주입 |
-
----
-
-## ✅ 유미님을 위한 결론
-
-> 단순한 출력 정도는 서블릿으로도 가능해요.  
-> 하지만 실제 웹앱(게시판, 쇼핑몰, 댓글 기능 등)을 만들수록  
-> **Spring MVC는 코드를 확 줄이고, 더 읽기 쉽게 만들어주고, 유지보수까지 훨씬 쉬워져요!**
