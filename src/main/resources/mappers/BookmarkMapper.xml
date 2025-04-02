@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- mapper 주의! -->
+<!-- MyBatis 전용 문서라는 걸 알려주는 선언 (정해진 틀이라고 생각하면 돼요) -->
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 인터페이스 형태로 구현된 Mapper 경로 -> 패키지 포함 -->
-<!-- 경로 참조/복사 > 참조 복사 (패키지 경로까지 포함) -->
+<!-- 이 mapper는 어떤 자바 인터페이스와 연결되는지 알려줘요 -->
+<!-- namespace는 BookmarkMapper.java의 전체 경로랑 완전히 똑같아야 함 -->
 <mapper namespace="org.example.searchbookmark.model.mapper.BookmarkMapper">
-<!--    <insert id="insertBookmark" parameterType="org.example.searchbookmark.model.vo.KeywordSearch">-->
+
+    <!-- 가장 마지막으로 저장된 북마크의 ID 한 개 가져오기 -->
+    <!--id: 자바에서 mapper.checkLastID()로 연결-->
+    <!--resultType: 결과가 문자열 하나니까 String으로 받겠다는 의미-->
     <select id="checkLastID" resultType="String">
         SELECT bookmark_id FROM search_result_bookmark
         ORDER BY created_at DESC LIMIT 1
     </select>
+    
+    <!-- 북마크 하나를 DB에 저장하는 SQL -->
+    <!--id: 자바에서 mapper.insertBookmark(keywordSearch)로 실행됨-->
+    <!--parameterType: 자바에서 넘길 객체의 타입. KeywordSearch 필드랑 이름 맞춰야 함-->
+    <!--#{title}: 자바 객체 안에 있는 필드값 꺼내 쓰는 문법-->
     <insert id="insertBookmark" parameterType="org.example.searchbookmark.model.vo.KeywordSearch">
         INSERT INTO search_result_bookmark (title, link, description, date) values (#{title}, #{link}, #{description}, #{date})
     </insert>
+    
+    <!-- SELECT 결과를 자바 객체(KeywordSearch)로 만들기 위한 규칙 -->
     <resultMap id="BookmarkMap" type="org.example.searchbookmark.model.vo.KeywordSearch">
         <constructor>
+             <!-- 생성자에 값을 어떻게 넣을지 하나하나 지정 -->
             <arg column="bookmark_id" javaType="String" name="uuid" />
             <arg column="title" javaType="String" name="title" />
             <arg column="link" javaType="String" name="link" />
@@ -24,8 +35,22 @@
             <arg column="created_at" javaType="String" name="createdAt" />
         </constructor>
     </resultMap>
+    
+    <!-- 북마크 하나를 uuid로 조회해서 KeywordSearch 객체로 변환 -->
     <select id="getOneBookmark" resultMap="BookmarkMap" parameterType="String">
         SELECT * FROM search_result_bookmark
         WHERE bookmark_id = #{uuid}
     </select>
 </mapper>
+
+```
+❗ resultMap은 SELECT 할 때만 필요해요.
+❌ INSERT, UPDATE, DELETE는 객체를 만들 필요가 없기 때문에 resultMap이 필요 없어요.
+🧩 SELECT는 결과를 "자바 객체"로 만들어서 돌려줘야 하기 때문이에요.
+
+✅ 반면, INSERT/UPDATE/DELETE는?
+이건 DB에 값을 넣는 것이죠.
+자바 객체 → SQL로 파라미터만 넘기면 끝이에요.
+객체를 다시 만들 필요가 없어요.
+그래서 resultMap이 필요 ❌
+```
