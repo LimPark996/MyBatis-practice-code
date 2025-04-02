@@ -183,6 +183,8 @@ public class AppConfig {
 ```
 - Bean으로 관리할 컴포넌트(@Controller, @Service 등)를 자동 탐색
 
+---
+
 **✅ WebAppInitializer.java**
 
 ```java
@@ -246,6 +248,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
 }
 ```
 - 프로젝트 시작 시 DispatcherServlet이 모든 요청을 가로채게 등록
+
+---
 
 **✅ WebConfig.java**
 
@@ -336,6 +340,7 @@ mybatis-config.xml 설정 파일을 로드해서 MyBatis와 DB를 연결하는 �
 
 즉, MyBatis를 쓰기 위한 기반 설정을 다 모아둔 클래스예요.
 
+```
 [처음] MyBatisConfig.getSqlSessionFactory() 호출됨
 
    ↓
@@ -357,6 +362,7 @@ mybatis-config.xml 설정 파일을 로드해서 MyBatis와 DB를 연결하는 �
      - 결과는 자바 객체로 매핑됨
 
 SqlSession: MyBatis가 DB에 SQL을 실행할 수 있게 해주는 객체예요.
+```
 
 ```java
 / MyBatis 설정을 자바 코드로 구성한 클래스
