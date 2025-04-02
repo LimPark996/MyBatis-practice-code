@@ -31,6 +31,10 @@ public class MainController {
 
     @GetMapping // 클라이언트가 GET 방식으로 "/index" 같은 주소에 접근했을 때 실행되는 메서드
     public String index(Model model, // JSP로 데이터를 넘기기 위한 객체
+
+     // Model은 JSP로 값을 넘기기 위한 Spring이 자동으로 넣어주는 데이터 상자예요!
+     // addAttribute("이름", 값)을 넣어주면
+     // JSP에서 ${이름}으로 꺼내 쓸 수 있어요.
                         
      // 요청 파라미터 중에 keyword라는 이름이 있을 경우, 그 값을 변수로 받음
      // 예: 사용자가 /index?keyword=고양이 라고 검색하면 keyword에 "고양이"가 들어감
