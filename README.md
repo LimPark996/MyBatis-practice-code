@@ -1,4 +1,4 @@
-## 🌱 Spring MVC란?
+### 🌱 Spring MVC란?
 
 > **Spring MVC는 웹 요청을 받아서 → 컨트롤러에 전달하고 → 뷰(JSP 등)를 보여주는 웹 프레임워크**예요.
 
@@ -12,7 +12,7 @@
 
 ---
 
-### ✅ 전체 흐름 한 눈에 보기
+**✅ 전체 흐름 한 눈에 보기**
 
 ```plaintext
 [사용자] ➝ /book 요청
@@ -30,7 +30,7 @@
 
 ---
 
-## 🧩 구성 요소별 역할 + 어디서 설정되는지
+### 🧩 구성 요소별 역할 + 어디서 설정되는지
 
 | 구성요소 | 역할 | 어떤 파일에서 설정됨 |
 |----------|------|--------------------|
@@ -40,19 +40,20 @@
 | **MyBatisConfig** | DB 연결 및 MyBatis 설정 (SQL 실행용) | `.env`, `mybatis-config.xml` 읽음 |
 
 ---
+
 ---
 
-## Spring MVC와 일반 서블릿 빙식 비교: ✅ 목표: 게시판 기능 만들기  
+### Spring MVC와 일반 서블릿 방식 비교: ✅ 목표: 게시판 기능 만들기  
 > "/post/list"로 접속하면 글 목록이 나오고  
 > "/post/write"로 글을 등록하면 저장된 글 목록에 반영됨
 
 ---
 
-### 1️⃣ **Spring 없이 만드는 방식 (서블릿 방식)**
+**1️⃣ Spring 없이 만드는 방식 (서블릿 방식)**
 
 ---
 
-### 📁 구조 (Spring 없음)
+**📁 구조 (Spring 없음)**
 
 ```
 webapp/
@@ -70,7 +71,7 @@ webapp/
 
 ---
 
-### ✅ Post.java
+**✅ Post.java**
 
 ```java
 public class Post {
@@ -82,7 +83,7 @@ public class Post {
 
 ---
 
-### ✅ PostRepository.java (글 저장소, 메모리 버전)
+**✅ PostRepository.java (글 저장소, 메모리 버전)**
 
 ```java
 public class PostRepository {
@@ -100,7 +101,7 @@ public class PostRepository {
 
 ---
 
-### ✅ PostListServlet.java
+**✅ PostListServlet.java**
 
 ```java
 @WebServlet("/post/list")
@@ -115,7 +116,7 @@ public class PostListServlet extends HttpServlet {
 
 ---
 
-### ✅ PostWriteServlet.java
+**✅ PostWriteServlet.java**
 
 ```java
 @WebServlet("/post/write")
@@ -135,7 +136,7 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-### ✅ list.jsp
+**✅ list.jsp**
 
 ```jsp
 <h1>글 목록</h1>
@@ -150,7 +151,7 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-### ✅ write.jsp
+**✅ write.jsp**
 
 ```jsp
 <h1>글쓰기</h1>
@@ -163,7 +164,7 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-### ⚠️ 여기까지의 문제점 (Spring 없이)
+**⚠️ 여기까지의 문제점 (Spring 없이)**
 
 - 서블릿 2개 (`list`, `write`) 각각 직접 작성
 - `doGet()`, `doPost()` 구분하고 `getParameter()`, `setAttribute()` 매번 반복
@@ -175,11 +176,11 @@ public class PostWriteServlet extends HttpServlet {
 
 ---
 
-## 2️⃣ **같은 기능, Spring MVC로 만들면?**
+### 2️⃣ **같은 기능, Spring MVC로 만들면?**
 
 ---
 
-### 📁 구조 (Spring MVC)
+**📁 구조 (Spring MVC)**
 
 ```
 src/
@@ -196,11 +197,11 @@ src/
 
 ---
 
-### ✅ Post.java, PostRepository.java (똑같음)
+**✅ Post.java, PostRepository.java (똑같음)**
 
 ---
 
-### ✅ PostController.java
+**✅ PostController.java**
 
 ```java
 @Controller
@@ -234,11 +235,11 @@ public class PostController {
 
 ---
 
-### ✅ list.jsp, write.jsp (거의 동일)
+**✅ list.jsp, write.jsp (거의 동일)**
 
 ---
 
-### 🧠 Spring MVC에서 달라진 점
+**🧠 Spring MVC에서 달라진 점**
 
 | 기능 | 서블릿 방식 | Spring MVC |
 |------|-------------|------------|
